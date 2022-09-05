@@ -13,7 +13,7 @@ class Location(models.Model):
 
 
 class Participant(models.Model):
-    email = models.EmailField(True)
+    email = models.EmailField(unique=True)
 
 
     def __str__(self):
