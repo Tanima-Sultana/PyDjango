@@ -2,14 +2,35 @@ from xml.etree.ElementInclude import include
 from django.shortcuts import render, redirect
 from .models import Meetup, Participant
 from .forms import RegistrationForm
+from django.http import HttpResponse
 
 meetups = Meetup.objects.all()
 
-def index(request):
+def all_meetups(request):
     print(meetups)
-    return render(request,'meetups/index.html',{
+    return render(request,'meetups/all_meetups.html',{
         'meetups':meetups
     })
+
+
+def index(request):
+    return render(request,'meetups/index.html')
+
+
+def count_words(request):
+    print('in count words function')
+    return render(request,'meetups/wordcount.html')
+
+def get_count_words(request):
+    text = request.POST['words']
+    text_length = len(text.split())
+    print(f'text in testarea : {text}')
+    print(f'text in testarea : {text_length}')
+    if text_length <10 :
+        return HttpResponse('heyy Please briefly describe your thoughts with more words')
+    return render(request,'meetups/wordcount.html')   # same html file will be loaded here A EXPERIMENT
+
+
 
 def signUp(request,meetup_slug):
     print('in signup')
@@ -47,10 +68,7 @@ def meetup_details(request,meetup_slug):
                 'meetup':selected_meetups,
                 'form':registration_form
             })
-                
-
-        
-            
+                        
     except Exception as exc:
         print(exc)
         return render(request,'meetups/meetup-details.html',{
