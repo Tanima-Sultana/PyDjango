@@ -1,10 +1,19 @@
-from xml.etree.ElementInclude import include
+import email
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Meetup, Participant
-from .forms import RegistrationForm
+from .forms import RegistrationForm, Subscribe
 from django.http import HttpResponse
+from django.core.mail import send_mail
+
+from meetups import forms
+#from myproject.settings import EMAIL_HOST_USER
+
+
 
 meetups = Meetup.objects.all()
+
 
 def all_meetups(request):
     print(meetups)
@@ -26,7 +35,7 @@ def get_count_words(request):
     text_length = len(text.split())
     print(f'text in testarea : {text}')
     print(f'text in testarea : {text_length}')
-    if text_length <10 :
+    if text_length < 10 :
         return HttpResponse('heyy Please briefly describe your thoughts with more words')
     return render(request,'meetups/wordcount.html')   # same html file will be loaded here A EXPERIMENT
 
@@ -38,6 +47,53 @@ def signUp(request,meetup_slug):
     return render(request,'meetups/registration-success.html',{
         'organizer_email':meetup.organizer_email
     })
+
+def register(request):
+    print('in register user')
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password == password2 :
+            if User.objects.filter(email=email).exists():
+                messages.info(request,'Email Already Used')
+                return redirect('register')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request,'Username Already Used')
+            else :
+                user = User.objects.create_user(username=username,email=email,password=password)
+                user.save()
+                return redirect('home')
+        else:
+            messages.info(request,'Password not matched!')
+            return redirect('register')
+
+
+
+    return render(request,'meetups/register.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username,password=password)
+
+        if user is not None:
+            auth.login(request,user)
+            return redirect('/')
+        else:
+            messages.info(request,'Credentials Invalid')
+            return redirect('login')
+    return render(request,'meetups/login.html')
+
 
 def meetup_details(request,meetup_slug):
     try:

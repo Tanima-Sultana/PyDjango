@@ -1,0 +1,31 @@
+{% extends 'meetups/base/base.html' %}
+{% load static %}
+{% block title %} Welcome {% endblock %}
+{% block site_css %} <link rel="stylesheet" href="{% static 'meetups/styles/meetup-detail.css' %}"> {% endblock %}
+{% block main_heading %} Please register here  {% endblock %}
+{% block body %} 
+<style>
+    h5{
+        color: red;
+    }
+</style>
+{% for message in messages %}
+    <h5>{{ message }}</h5>
+{% endfor %}
+  
+    <form method="POST" action="register">
+        {% csrf_token %}
+        <p>Username:</p>
+        <input type="text" name="username"/>
+        <p>Email:</p>
+        <input type="email" name="email"/>
+        <p>Password:</p>
+        <input type="password" name="password"/>
+        <p>Retype Password:</p>
+        <input type="password" name="password2"/><br>
+        <input type="submit"/>
+
+    </form>
+
+
+{% endblock %}
