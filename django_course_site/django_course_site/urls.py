@@ -21,6 +21,6 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',RedirectView.as_view(url='/meetups')),
+    path('',RedirectView.as_view(url='/meetups/login')),
     path('meetups/',include('meetups.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Welcome {% endblock %}
 {% block site_css %} <link rel="stylesheet" href="{% static 'meetups/styles/meetup-detail.css' %}"> {% endblock %}
-{% block main_heading %} Please Login here  {% endblock %}
+{% block main_heading %} Please Login here <br> or <a href="/meetups/register" >Register</a> {% endblock %}
 {% block body %} 
 <style>
     h5{
@@ -12,16 +12,20 @@
 {% for message in messages %}
     <h5>{{ message }}</h5>
 {% endfor %}
-  
-    <form method="POST" action="login">
-        {% csrf_token %}
-        <p>Username:</p>
-        <input type="text" name="username"/>
-        <p>Password:</p>
-        <input type="password" name="password"/><br>
-        <input type="submit"/>
-
-    </form>
+<article>
+    <section id="details">
+        <form method="POST" action="login">
+            {% csrf_token %}
+            <p>Username:</p>
+            <input type="text" name="username"/>
+            <p>Password:</p>
+            <input type="password" name="password"/><br>
+            <input type="submit"/>
+    
+        </form>
+    </section>
+</article>
+   
 
 
 {% endblock %}

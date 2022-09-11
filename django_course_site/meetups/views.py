@@ -87,8 +87,9 @@ def login(request):
         user = auth.authenticate(username=username,password=password)
 
         if user is not None:
+            print('user logged in successfully')
             auth.login(request,user)
-            return redirect('/')
+            return redirect('home')
         else:
             messages.info(request,'Credentials Invalid')
             return redirect('login')
