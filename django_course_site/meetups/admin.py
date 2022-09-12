@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Location,Participant,Meetup
+from .models import  Location,Participant,Meetup, Profile
 
 # Register your models here.
 
@@ -11,4 +11,5 @@ class MeetupAdmin(admin.ModelAdmin):
 admin.site.register(Meetup,MeetupAdmin)
 admin.site.register(Location)
 admin.site.register(Participant)
+admin.site.register(Profile)
 

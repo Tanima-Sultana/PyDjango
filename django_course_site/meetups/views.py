@@ -2,9 +2,11 @@ import email
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .models import Meetup, Participant
-from .forms import RegistrationForm, Subscribe
+from .models import Meetup, Participant, Profile
+from .forms import RegistrationForm, UserForm,ProfileForm
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, CreateView
 from django.core.mail import send_mail
 
 from meetups import forms
@@ -65,7 +67,7 @@ def register(request):
             else :
                 user = User.objects.create_user(username=username,email=email,password=password)
                 user.save()
-                return redirect('home')
+                return redirect('login')
         else:
             messages.info(request,'Password not matched!')
             return redirect('register')
@@ -131,3 +133,42 @@ def meetup_details(request,meetup_slug):
         return render(request,'meetups/meetup-details.html',{
             'meetup_found':False
         })
+
+
+class ProfileUpdateView(LoginRequiredMixin, TemplateView):
+    user_form = UserForm
+    profile_form = ProfileForm
+    template_name = 'meetups/profile-update.html'
+
+    def post(self, request):
+
+        post_data = request.POST or None
+        file_data = request.FILES or None
+
+        user_form = UserForm(post_data, instance=request.user)
+        try:
+            profile_form = ProfileForm(post_data, file_data, instance=request.user.profile)
+            
+        except:
+            profile_form = ProfileForm(post_data, file_data, instance=Profile(user_id=request.user.id))
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('profile')
+
+        context = self.get_context_data(
+                                        user_form=user_form,
+                                        profile_form=profile_form
+                                    )
+
+        return self.render_to_response(context)     
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'meetups/profile.html'
+
+

@@ -10,6 +10,8 @@ urlpatterns = [
     path('words-count',views.get_count_words,name='word-count'),
     path('<slug:meetup_slug>/success/',views.signUp,name='confirm-registration'),
     path('login',views.login,name='login'),
+    path('profile-update',views.ProfileUpdateView.as_view(),name='profile-update'),
+    path('profile',views.ProfileView.as_view(),name='profile'),
     path('meetup/<slug:meetup_slug>',views.meetup_details,name='meetup-detail'),
 
 ]
