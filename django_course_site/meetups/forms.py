@@ -36,5 +36,6 @@ class ProfileForm(forms.ModelForm):
             'bio',
             'phone_number',
             'birth_date',
-            'profile_image'
+            'profile_image',
+            'pdf_file'
         ]

@@ -1,9 +1,15 @@
-{% extends 'meetups/base/base.html' %}
 {% load static %}
-{% block title %} Welcome {% endblock %}
-{% block site_css %} <link rel="stylesheet" href="{% static 'meetups/styles/meetup-detail.css' %}"> {% endblock %}
-{% block main_heading %} Please Login here <br> or <a href="/meetups/register" >Register</a> {% endblock %}
-{% block body %} 
+<html>
+    <head>
+        <title>
+            Please Login here <br> or <a href="/meetups/register" >Register</a>
+        </title>
+        <link rel="stylesheet" href="{% static 'meetups/styles/login.css' %}">
+
+    </head>
+<body>
+
+
 <style>
     h5{
         color: red;
@@ -12,20 +18,45 @@
 {% for message in messages %}
     <h5>{{ message }}</h5>
 {% endfor %}
-<article>
+<div class="container">
+    
+
+    <div class="card">
+        <h2>
+            Django Meetup
+        </h2>
+        <div class="inner-box" id="card">
+            <div class="card-front" >
+                <h2>LOGIN</h2>
+                <form method="POST" action="login">
+                    {% csrf_token %}
+                    <input class="input-box" type="text" name="username" placeholder="Your User name" required/>
+                    <input type="password" class="input-box" name="password" placeholder="Password" required/><br>
+                    <button type="submit" class="submit-btn">Submit</button>
+            
+                </form>
+                <button type="submit" class="btn" onclick="location.href= '/meetups/register'">I'm New Here</button>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- <article>
     <section id="details">
         <form method="POST" action="login">
             {% csrf_token %}
             <p>Username:</p>
-            <input type="text" name="username"/>
+            <input id="input-box" type="text" name="username"/>
             <p>Password:</p>
             <input type="password" name="password"/><br>
             <input type="submit"/>
     
         </form>
     </section>
-</article>
+</article> -->
    
+</body>
+</html>
 
-
-{% endblock %}

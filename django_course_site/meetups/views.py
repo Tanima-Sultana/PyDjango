@@ -1,4 +1,5 @@
 import email
+from urllib import request
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -22,6 +23,9 @@ def all_meetups(request):
     return render(request,'meetups/all_meetups.html',{
         'meetups':meetups
     })
+
+def test(request):
+    return render(request,'meetups/test.html')
 
 
 def index(request):

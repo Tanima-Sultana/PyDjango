@@ -1,0 +1,9 @@
+& c:/Users/DELL/Desktop/storefront/newenv/Scripts/Activate.ps1
+mysql username password both is : tanima
+mysql username root and password tanima
+jetbrains username tanimasultana.du@gmail.com and password : Csedu22*()
+find all the virtual environment path: pipenv --venv
+activate virtual environment : pipenv shell
+database query 'and' operator simply work with chaining filter or comma
+database query or operator 'Q' is used to get logical or values
+to compare different entity of same database F is used 

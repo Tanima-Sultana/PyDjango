@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.all_meetups,name='all-meetup'),
+    path('test',views.test,name='test'),
     path('register', views.register,name='register'),
     path('home', views.index,name='home'),
     path('logout',views.logout, name='logout'),

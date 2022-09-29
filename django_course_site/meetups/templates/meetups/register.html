@@ -1,9 +1,8 @@
-{% extends 'meetups/base/base.html' %}
 {% load static %}
-{% block title %} Welcome {% endblock %}
-{% block site_css %} <link rel="stylesheet" href="{% static 'meetups/styles/meetup-detail.css' %}"> {% endblock %}
-{% block main_heading %} Please register here <br> or <a href="/meetups/login" >Login</a>  {% endblock %}
-{% block body %} 
+<html>
+    <link rel="stylesheet" href="{% static 'meetups/styles/meetup-detail.css' %}">
+<link rel="stylesheet" href="{% static 'meetups/styles/login.css' %}"> 
+<body>
 <style>
     h5{
         color: red;
@@ -12,25 +11,28 @@
 {% for message in messages %}
     <h5>{{ message }}</h5>
 {% endfor %}
-<article>
-    <section id="details">
+<div class="container">
+<div class="card">
+    <h2>Django Meetup </h2>
+    <div class="inner-box" id="card">
+    <div class="card-back">
+        <h2>REGISTER</h2>
         <form method="POST" action="register">
             {% csrf_token %}
-            <p>Username:</p>
-            <input type="text" name="username"/>
-            <p>Email:</p>
-            <input type="email" name="email"/>
-            <p>Password:</p>
-            <input type="password" name="password"/>
-            <p>Retype Password:</p>
-            <input type="password" name="password2"/><br>
-            <input type="submit"/>
+            <input class="input-box" type="text" name="username" placeholder="User name" required/><br>
+            <input class="input-box"type="email" name="email" placeholder="Your email here" required/>
+            <input class="input-box" type="password" name="password" placeholder="password" required/>
+            <input class="input-box" type="password" name="password2" placeholder="retype password" required/><br>
+            <button type="submit" class="btn">Register</button>
     
         </form>
-    </section>
-</article>
+        <button type="submit" class="btn" onclick="location.href= '/meetups/login'">I've account here</button>
+
+    </div>
+    </div>
+</div>
+</div>
   
-    
+</body>
 
-
-{% endblock %}
+</html>
